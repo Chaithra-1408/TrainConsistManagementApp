@@ -1,39 +1,37 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainApp {
     public static void main(String[] args) {
-        // --- UC1 & UC2: Existing List Logic ---
         System.out.println("=== Train Consist Management App ===");
-        List<String> trainConsist = new ArrayList<>();
-        trainConsist.add("Sleeper");
-        trainConsist.add("First Class");
 
-        // --- UC3: Unique Bogie ID Tracking (HashSet) ---
-        System.out.println("\n--- UC3: Tracking Unique Bogie IDs ---");
+        // --- UC4: Ordered Train Consist (LinkedList) ---
+        System.out.println("\n--- UC4: Maintaining Physical Bogie Sequence ---");
 
-        // 1. Initialize a HashSet for unique IDs
-        Set<String> bogieIds = new HashSet<>();
+        // 1. Create a LinkedList for the consist
+        LinkedList<String> trainSequence = new LinkedList<>();
 
-        // 2. Add Bogie IDs (including intentional duplicates)
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        // 2. Add bogies: Engine, Sleeper, AC, Cargo, Guard
+        trainSequence.add("Engine");
+        trainSequence.add("Sleeper");
+        trainSequence.add("AC Chair");
+        trainSequence.add("Cargo");
+        trainSequence.add("Guard Coach");
 
-        System.out.println("Attempting to add duplicate ID: BG101...");
-        boolean isAdded = bogieIds.add("BG101"); // This will return false
+        System.out.println("Initial Sequence: " + trainSequence);
 
-        if (!isAdded) {
-            System.out.println("System Alert: Duplicate Bogie ID 'BG101' rejected!");
-        }
+        // 3. Insert a Pantry Car at position 2 (Index 2)
+        System.out.println("\nInserting 'Pantry Car' at position 2...");
+        trainSequence.add(2, "Pantry Car");
+        System.out.println("Updated Sequence: " + trainSequence);
 
-        // 3. Print the final set
-        System.out.println("\nRegistered Unique Bogie IDs: " + bogieIds);
+        // 4. Remove the first and last bogie
+        System.out.println("\nDetaching Engine (First) and Guard Coach (Last)...");
+        trainSequence.removeFirst();
+        trainSequence.removeLast();
 
-        // 4. Verify count
-        System.out.println("Total Unique Bogies Registered: " + bogieIds.size());
+        // 5. Display the final ordered train consist
+        System.out.println("Final Consist: " + trainSequence);
+        System.out.println("Current Coach Count: " + trainSequence.size());
         System.out.println("====================================");
     }
 }
