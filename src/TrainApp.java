@@ -1,37 +1,35 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        // --- UC5: Preservation of Order with Uniqueness (LinkedHashSet) ---
-        System.out.println("\n--- UC5: Preserving Insertion Order with Uniqueness ---");
+        // --- UC6: Bogie to Capacity Mapping (HashMap) ---
+        System.out.println("\n--- UC6: Maintaining Bogie Capacities ---");
 
-        // 1. Create a LinkedHashSet for the train formation
-        Set<String> trainFormation = new LinkedHashSet<>();
+        // 1. Create a HashMap to store Bogie Name -> Capacity
+        Map<String, Integer> bogieCapacities = new HashMap<>();
 
-        // 2. Attach bogies: Engine, Sleeper, Cargo, Guard
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // 2. Use put() to map each bogie to its capacity
+        bogieCapacities.put("Sleeper", 72);
+        bogieCapacities.put("AC Chair", 56);
+        bogieCapacities.put("First Class", 24);
+        bogieCapacities.put("General", 90);
 
-        System.out.println("Initial Formation: " + trainFormation);
+        System.out.println("Capacity data successfully mapped.");
 
-        // 3. Attempt to attach a duplicate bogie intentionally
-        System.out.println("\nAttempting to re-attach 'Sleeper'...");
-        boolean isAdded = trainFormation.add("Sleeper");
+        // 3. Fast Lookup Example
+        String searchBogie = "AC Chair";
+        System.out.println("\nSearching capacity for: " + searchBogie);
+        System.out.println("Result: " + bogieCapacities.get(searchBogie) + " seats available.");
 
-        if (!isAdded) {
-            System.out.println("Alert: 'Sleeper' is already part of the train. Duplicate rejected.");
+        // 4. Iterate over the map using entrySet() to display all details
+        System.out.println("\n--- Full Bogie Capacity List ---");
+        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
+            System.out.println("Bogie Type: " + entry.getKey() + " | Capacity: " + entry.getValue() + " seats");
         }
 
-        // 4. Display the final formation order
-        System.out.println("\nFinal Formation (Order Preserved): " + trainFormation);
-
-        // 5. Verify the count
-        System.out.println("Total Unique Bogies in Order: " + trainFormation.size());
         System.out.println("====================================");
     }
 }
