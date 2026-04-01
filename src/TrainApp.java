@@ -1,37 +1,37 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TrainApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        // --- UC4: Ordered Train Consist (LinkedList) ---
-        System.out.println("\n--- UC4: Maintaining Physical Bogie Sequence ---");
+        // --- UC5: Preservation of Order with Uniqueness (LinkedHashSet) ---
+        System.out.println("\n--- UC5: Preserving Insertion Order with Uniqueness ---");
 
-        // 1. Create a LinkedList for the consist
-        LinkedList<String> trainSequence = new LinkedList<>();
+        // 1. Create a LinkedHashSet for the train formation
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        // 2. Add bogies: Engine, Sleeper, AC, Cargo, Guard
-        trainSequence.add("Engine");
-        trainSequence.add("Sleeper");
-        trainSequence.add("AC Chair");
-        trainSequence.add("Cargo");
-        trainSequence.add("Guard Coach");
+        // 2. Attach bogies: Engine, Sleeper, Cargo, Guard
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
 
-        System.out.println("Initial Sequence: " + trainSequence);
+        System.out.println("Initial Formation: " + trainFormation);
 
-        // 3. Insert a Pantry Car at position 2 (Index 2)
-        System.out.println("\nInserting 'Pantry Car' at position 2...");
-        trainSequence.add(2, "Pantry Car");
-        System.out.println("Updated Sequence: " + trainSequence);
+        // 3. Attempt to attach a duplicate bogie intentionally
+        System.out.println("\nAttempting to re-attach 'Sleeper'...");
+        boolean isAdded = trainFormation.add("Sleeper");
 
-        // 4. Remove the first and last bogie
-        System.out.println("\nDetaching Engine (First) and Guard Coach (Last)...");
-        trainSequence.removeFirst();
-        trainSequence.removeLast();
+        if (!isAdded) {
+            System.out.println("Alert: 'Sleeper' is already part of the train. Duplicate rejected.");
+        }
 
-        // 5. Display the final ordered train consist
-        System.out.println("Final Consist: " + trainSequence);
-        System.out.println("Current Coach Count: " + trainSequence.size());
+        // 4. Display the final formation order
+        System.out.println("\nFinal Formation (Order Preserved): " + trainFormation);
+
+        // 5. Verify the count
+        System.out.println("Total Unique Bogies in Order: " + trainFormation.size());
         System.out.println("====================================");
     }
 }
