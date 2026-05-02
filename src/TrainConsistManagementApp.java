@@ -178,6 +178,43 @@ public class TrainConsistManagementApp {
         System.out.println("\nUC12 safety validation completed...");
         System.out.println("====================================");
 
+        System.out.println("\n============================================");
+        System.out.println(" UC13 - Performance Comparison (Loops vs Streams) ");
+        System.out.println("============================================\n");
+
+        List<Bogie> testBogies = new ArrayList<>();
+        testBogies.add(new Bogie("Sleeper", 72));
+        testBogies.add(new Bogie("AC Chair", 56));
+        testBogies.add(new Bogie("First Class", 24));
+        testBogies.add(new Bogie("General", 90));
+        testBogies.add(new Bogie("AC Sleeper", 48));
+        testBogies.add(new Bogie("Express General", 85));
+
+        int filterThreshold = 60;
+
+        long loopStart = System.nanoTime();
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : testBogies) {
+            if (b.capacity > filterThreshold) {
+                loopResult.add(b);
+            }
+        }
+        long loopEnd = System.nanoTime();
+        long loopTime = loopEnd - loopStart;
+
+        long streamStart = System.nanoTime();
+        List<Bogie> streamResult = testBogies.stream()
+                .filter(b -> b.capacity > filterThreshold)
+                .collect(Collectors.toList());
+        long streamEnd = System.nanoTime();
+        long streamTime = streamEnd - streamStart;
+
+        System.out.println("Loop Execution Time (ns): " + loopTime);
+        System.out.println("Stream Execution Time (ns): " + streamTime);
+
+        System.out.println("\nUC13 performance benchmarking completed...");
+        System.out.println("====================================");
+
         scanner.close();
     }
 }
