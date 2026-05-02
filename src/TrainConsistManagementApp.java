@@ -52,6 +52,39 @@ class PassengerBogie {
     }
 }
 
+class CargoSafetyException extends RuntimeException {
+    public CargoSafetyException(String message) {
+        super(message);
+    }
+}
+
+class CargoBogie {
+    String shape;
+    String cargo;
+
+    CargoBogie(String shape) {
+        this.shape = shape;
+    }
+
+    void assignCargo(String cargo) {
+        try {
+            if (shape.equals("Rectangular")
+                    && cargo.equals("Petroleum")) {
+                throw new CargoSafetyException(
+                        "Unsafe cargo assignment!");
+            }
+            this.cargo = cargo;
+            System.out.println("Cargo assigned successfully -> "
+                    + cargo);
+        } catch (CargoSafetyException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("Cargo validation completed for "
+                    + shape + " bogie");
+        }
+    }
+}
+
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
@@ -260,6 +293,21 @@ public class TrainConsistManagementApp {
         }
 
         System.out.println("\nUC14 exception handling completed...");
+        System.out.println("====================================");
+
+        System.out.println("\n============================================");
+        System.out.println(" UC15 - Safe Cargo Assignment");
+        System.out.println("============================================\n");
+
+        CargoBogie cylindricalBogie = new CargoBogie("Cylindrical");
+        cylindricalBogie.assignCargo("Petroleum");
+
+        System.out.println();
+
+        CargoBogie rectangularBogie = new CargoBogie("Rectangular");
+        rectangularBogie.assignCargo("Petroleum");
+
+        System.out.println("\nUC15 runtime handling completed...");
         System.out.println("====================================");
 
         scanner.close();
