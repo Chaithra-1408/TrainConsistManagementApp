@@ -31,6 +31,27 @@ class GoodsBogie {
     }
 }
 
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+class PassengerBogie {
+    String type;
+    int capacity;
+
+    PassengerBogie(String type, int capacity)
+            throws InvalidCapacityException {
+        if (capacity <= 0) {
+            throw new InvalidCapacityException(
+                    "Capacity must be greater than zero");
+        }
+        this.type = type;
+        this.capacity = capacity;
+    }
+}
+
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
@@ -213,6 +234,32 @@ public class TrainConsistManagementApp {
         System.out.println("Stream Execution Time (ns): " + streamTime);
 
         System.out.println("\nUC13 performance benchmarking completed...");
+        System.out.println("====================================");
+
+        System.out.println("\n============================================");
+        System.out.println(" UC14 - Handle Invalid Bogie Capacity");
+        System.out.println("============================================\n");
+
+        try {
+            PassengerBogie validBogie =
+                    new PassengerBogie("Sleeper", 72);
+            System.out.println("Created Bogie: "
+                    + validBogie.type + " -> " + validBogie.capacity);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            PassengerBogie invalidBogie =
+                    new PassengerBogie("AC Chair", -5);
+            System.out.println("Created Bogie: "
+                    + invalidBogie.type
+                    + " -> " + invalidBogie.capacity);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("\nUC14 exception handling completed...");
         System.out.println("====================================");
 
         scanner.close();
